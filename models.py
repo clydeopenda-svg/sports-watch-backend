@@ -47,7 +47,7 @@ class Streak(db.Model, SerializerMixin):
 
 class Sport(db.Model, SerializerMixin):
     __tablename__ = "sports"
-    serialize_rules = ("-workout_logs.sport", "-sport_exercises.sport")
+    serialize_rules = ("-workout_logs", "-sport_exercises.sport")
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
