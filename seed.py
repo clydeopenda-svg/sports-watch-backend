@@ -3,8 +3,9 @@ import random
 from werkzeug.security import generate_password_hash
 from faker import Faker
 
-from app import app
-from models import db, User, Profile, Streak, Sport, Exercise, SportExercise, WorkoutLog, Goal
+from main import app
+from extensions import db
+from models import User, Profile, Streak, Sport, Exercise, SportExercise, WorkoutLog, Goal
 
 fake = Faker()
 
