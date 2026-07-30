@@ -1,0 +1,70 @@
+erDiagram
+    USERS {
+        int id PK
+        string username
+        string email
+        string password_hash
+        string role
+    }
+
+    PROFILES {
+        int id PK
+        int user_id FK
+        int age
+        float weight_kg
+        float height_cm
+    }
+
+    STREAKS {
+        int id PK
+        int user_id FK
+        int current_streak
+        int longest_streak
+        date last_active_date
+    }
+
+    SPORTS {
+        int id PK
+        string name
+        string description
+    }
+
+    EXERCISES {
+        int id PK
+        string name
+        string muscle_group
+    }
+
+    SPORT_EXERCISES {
+        int id PK
+        int sport_id FK
+        int exercise_id FK
+        int recommended_sets
+        int recommended_reps
+    }
+
+    WORKOUT_LOGS {
+        int id PK
+        int user_id FK
+        int sport_id FK
+        date log_date
+        int duration_minutes
+    }
+
+    GOALS {
+        int id PK
+        int user_id FK
+        string description
+        date target_date
+        bool achieved
+    }
+
+    USERS ||--|| PROFILES : has
+    USERS ||--|| STREAKS : has
+    USERS ||--o{ WORKOUT_LOGS : "creates"
+    USERS ||--o{ GOALS : "creates"
+    SPORTS ||--o{ WORKOUT_LOGS : "used by"
+    SPORTS ||--o{ SPORT_EXERCISES : "contains"
+    EXERCISES ||--o{ SPORT_EXERCISES : "linked to"
+    USERS ||--o{ GOALS : "sets"
+    

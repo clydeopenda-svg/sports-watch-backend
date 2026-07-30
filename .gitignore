@@ -1,5 +1,6 @@
 venv/
 __pycache__/
 .env
+instance/
 client/node_modules/
 client/dist/
