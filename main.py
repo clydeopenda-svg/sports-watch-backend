@@ -12,6 +12,7 @@ from controllers.sport_controller import SportController
 from controllers.exercise_controller import ExerciseController
 from controllers.workout_log_controller import WorkoutLogController
 from controllers.goal_controller import GoalController
+from controllers.attire_guide_controller import AttireGuideController
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -115,6 +116,27 @@ def get_goals():
 def create_goal():
     goal = GoalController.create_goal(get_jwt_identity(), request.get_json())
     return goal.to_dict(), 201
+
+
+
+@app.route("/sports/<int:sport_id>/attire", methods=["GET"])
+def get_attire_for_sport(sport_id):
+    items = AttireGuideController.get_by_sport(sport_id)
+    return jsonify([i.to_dict() for i in items]), 200
+
+
+@app.route("/attire", methods=["POST"])
+@admin_required
+def create_attire():
+    item = AttireGuideController.create(request.get_json())
+    return item.to_dict(), 201
+
+
+@app.route("/attire/<int:id>", methods=["DELETE"])
+@admin_required
+def delete_attire(id):
+    AttireGuideController.delete(id)
+    return {}, 204
 
 
 if __name__ == "__main__":

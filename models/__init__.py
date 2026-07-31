@@ -6,3 +6,4 @@ from models.exercise import Exercise
 from models.sport_exercise import SportExercise
 from models.workout_log import WorkoutLog
 from models.goal import Goal
+from models.attire_guide import AttireGuide

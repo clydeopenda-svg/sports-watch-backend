@@ -5,7 +5,7 @@ from faker import Faker
 
 from main import app
 from extensions import db
-from models import User, Profile, Streak, Sport, Exercise, SportExercise, WorkoutLog, Goal
+from models import User, Profile, Streak, Sport, Exercise, SportExercise, WorkoutLog, Goal, AttireGuide
 
 fake = Faker()
 
@@ -74,3 +74,19 @@ with app.app_context():
     db.session.commit()
 
     print("Seeded successfully.")
+
+    # AttireGuide (1:many from Sport)
+    attire_items = {
+        "Athletics": ["Running spikes", "Compression shorts"],
+        "Soccer": ["Shin guards", "Cleats", "Jersey"],
+        "Swimming": ["Swim cap", "Goggles"],
+        "Calisthenics": ["Grip gloves", "Wrist wraps"],
+        "Cycling": ["Helmet", "Padded shorts"],
+        "Walking": ["Supportive shoes"],
+    }
+    for sport in sports:
+        for item in attire_items.get(sport.name, []):
+            db.session.add(AttireGuide(sport_id=sport.id, item_name=item, mandatory=random.choice([True, False])))
+    db.session.commit()
+
+    print("Attire guides seeded.")
