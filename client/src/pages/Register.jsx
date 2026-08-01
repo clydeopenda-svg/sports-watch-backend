@@ -34,24 +34,27 @@ export default function Register() {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label>
-          <input name="username" value={form.username} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Email</label>
-          <input name="email" type="email" value={form.email} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Password</label>
-          <input name="password" type="password" value={form.password} onChange={handleChange} required />
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" disabled={loading}>{loading ? "Creating account..." : "Register"}</button>
-      </form>
+    <div className="auth-page">
+      <h1>Join Sports Watch</h1>
+      <p>Start tracking your training and building your streak.</p>
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Username</label>
+            <input name="username" value={form.username} onChange={handleChange} required />
+          </div>
+          <div>
+            <label>Email</label>
+            <input name="email" type="email" value={form.email} onChange={handleChange} required />
+          </div>
+          <div>
+            <label>Password</label>
+            <input name="password" type="password" value={form.password} onChange={handleChange} required />
+          </div>
+          {error && <p className="error-text">{error}</p>}
+          <button type="submit" disabled={loading}>{loading ? "Creating account..." : "Register"}</button>
+        </form>
+      </div>
       <p>Already have an account? <Link to="/login">Login</Link></p>
     </div>
   );

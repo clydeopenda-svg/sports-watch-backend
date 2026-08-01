@@ -1,8 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "./Navbar.css";
+
+const links = [
+  { to: "/", label: "Dashboard" },
+  { to: "/workout-logs", label: "Workout Logs" },
+  { to: "/goals", label: "Goals" },
+  { to: "/sports", label: "Sports" },
+  { to: "/attire", label: "Attire" },
+  { to: "/stats", label: "Stats" },
+];
 
 export default function Navbar() {
-  const { token, logout } = useAuth();
+  const { token, user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,16 +21,28 @@ export default function Navbar() {
   };
 
   return (
-    <nav style={{ display: "flex", gap: "1rem", padding: "1rem", borderBottom: "1px solid #ddd" }}>
-      <Link to="/">Dashboard</Link>
-      <Link to="/workout-logs">Workout Logs</Link>
-      <Link to="/goals">Goals</Link>
-      <Link to="/sports">Sports</Link>
-      <div style={{ marginLeft: "auto" }}>
+    <nav className="sidebar">
+      <div className="sidebar-brand">Sports Watch</div>
+      <div className="sidebar-links">
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            end={link.to === "/"}
+            className={({ isActive }) => "sidebar-link" + (isActive ? " active" : "")}
+          >
+            {link.label}
+          </NavLink>
+        ))}
+      </div>
+      <div className="sidebar-footer">
         {token ? (
-          <button onClick={handleLogout}>Logout</button>
+          <>
+            {user && <span className="sidebar-user">{user.username}</span>}
+            <button className="danger" onClick={handleLogout}>Logout</button>
+          </>
         ) : (
-          <Link to="/login">Login</Link>
+          <NavLink to="/login" className="sidebar-link">Login</NavLink>
         )}
       </div>
     </nav>
