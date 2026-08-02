@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
@@ -20,7 +21,7 @@ app.config.from_object(Config)
 db.init_app(app)
 jwt.init_app(app)
 migrate = Migrate(app, db)
-CORS(app)
+CORS(app, origins=os.environ.get("FRONTEND_URL", "*").split(","))
 
 
 @app.route("/register", methods=["POST"])

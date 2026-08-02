@@ -21,30 +21,40 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sidebar">
-      <div className="sidebar-brand">Sports Watch</div>
-      <div className="sidebar-links">
-        {links.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.to === "/"}
-            className={({ isActive }) => "sidebar-link" + (isActive ? " active" : "")}
-          >
-            {link.label}
-          </NavLink>
-        ))}
+    <header className="topbar">
+      <div className="topbar-inner">
+        <div className="topbar-brand">
+          <div className="brand-mark">SW</div>
+          <div>
+            <p className="brand-name">Sports Watch</p>
+            <span className="brand-subtitle">Performance OS</span>
+          </div>
+        </div>
+
+        <nav className="topbar-nav" aria-label="Primary navigation">
+          {links.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === "/"}
+              className={({ isActive }) => "topbar-link" + (isActive ? " active" : "")}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="topbar-actions">
+          {token ? (
+            <>
+              {user && <span className="topbar-user">{user.username}</span>}
+              <button className="topbar-logout" onClick={handleLogout}>Logout</button>
+            </>
+          ) : (
+            <NavLink to="/login" className="topbar-link topbar-link-plain">Login</NavLink>
+          )}
+        </div>
       </div>
-      <div className="sidebar-footer">
-        {token ? (
-          <>
-            {user && <span className="sidebar-user">{user.username}</span>}
-            <button className="danger" onClick={handleLogout}>Logout</button>
-          </>
-        ) : (
-          <NavLink to="/login" className="sidebar-link">Login</NavLink>
-        )}
-      </div>
-    </nav>
+    </header>
   );
 }

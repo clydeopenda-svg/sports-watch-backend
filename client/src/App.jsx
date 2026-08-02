@@ -15,19 +15,21 @@ import "./App.css";
 export default function App() {
   return (
     <AuthProvider>
-      <Navbar />
-      <main className="page">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/sports" element={<ProtectedRoute><Sports /></ProtectedRoute>} />
-          <Route path="/workout-logs" element={<ProtectedRoute><WorkoutLogs /></ProtectedRoute>} />
-          <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
-          <Route path="/attire" element={<ProtectedRoute><Attire /></ProtectedRoute>} />
-          <Route path="/stats" element={<ProtectedRoute><Stats /></ProtectedRoute>} />
-        </Routes>
-      </main>
+      <div className="app-shell">
+        <Navbar />
+        <main className="page">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/sports" element={<ProtectedRoute><Sports /></ProtectedRoute>} />
+            <Route path="/workout-logs" element={<ProtectedRoute><WorkoutLogs /></ProtectedRoute>} />
+            <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
+            <Route path="/attire" element={<ProtectedRoute><Attire /></ProtectedRoute>} />
+            <Route path="/stats" element={<ProtectedRoute><Stats /></ProtectedRoute>} />
+          </Routes>
+        </main>
+      </div>
     </AuthProvider>
   );
 }

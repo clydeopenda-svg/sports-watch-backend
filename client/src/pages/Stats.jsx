@@ -16,23 +16,28 @@ export default function Stats() {
   }
 
   return (
-    <div>
+    <div className="page-stack">
       <BackgroundRotator images={statsImages} />
-      <h1>Stats</h1>
-      <p>Your training breakdown by sport.</p>
+      <section className="page-hero">
+        <p className="section-kicker">Performance</p>
+        <h1>Stats</h1>
+        <p>Your training breakdown by sport, distilled into a clear overview.</p>
+      </section>
 
-      {loading && <p>Loading...</p>}
+      {loading && <div className="card loading-card"><p>Analyzing training patterns...</p></div>}
       {error && <p className="error-text">{error}</p>}
-      {data && Object.keys(totals).length === 0 && <p>No workout data yet.</p>}
+      {data && Object.keys(totals).length === 0 && <div className="card"><p>No workout data yet.</p></div>}
       {data && Object.keys(totals).length > 0 && (
-        <div className="card">
-          {Object.entries(totals).map(([sport, stat]) => (
-            <div key={sport} className="list-item">
-              <span>{sport}</span>
-              <span className="mono muted">{stat.sessions} sessions · {stat.minutes} min</span>
-            </div>
-          ))}
-        </div>
+        <section className="card">
+          <ul className="stack-list">
+            {Object.entries(totals).map(([sport, stat]) => (
+              <li key={sport} className="list-item">
+                <span>{sport}</span>
+                <span className="mono">{stat.sessions} sessions · {stat.minutes} min</span>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
     </div>
   );

@@ -24,12 +24,15 @@ export default function Goals() {
   };
 
   return (
-    <div>
+    <div className="page-stack">
       <BackgroundRotator images={goalsImages} />
-      <h1>Goals</h1>
-      <p>Set targets and track progress.</p>
+      <section className="page-hero">
+        <p className="section-kicker">Planning</p>
+        <h1>Goals</h1>
+        <p>Set targets and track progress with a calm, focused workspace.</p>
+      </section>
 
-      <div className="card">
+      <section className="card">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <input name="description" placeholder="Goal description" value={form.description} onChange={handleChange} required />
@@ -37,23 +40,23 @@ export default function Goals() {
             <button type="submit">Add Goal</button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div className="card">
-        {loading && <p>Loading...</p>}
+      <section className="card">
+        {loading && <p>Loading goals...</p>}
         {error && <p className="error-text">{error}</p>}
         {data && data.length === 0 && <p>No goals yet.</p>}
         {data && (
-          <ul>
+          <ul className="stack-list">
             {data.map((goal) => (
               <li key={goal.id} className="list-item">
                 <span>{goal.description}</span>
-                <span className="mono muted">due {goal.target_date} {goal.achieved ? "✅" : ""}</span>
+                <span className="mono">due {goal.target_date} {goal.achieved ? "✅" : ""}</span>
               </li>
             ))}
           </ul>
         )}
-      </div>
+      </section>
     </div>
   );
 }

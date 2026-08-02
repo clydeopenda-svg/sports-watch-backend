@@ -9,32 +9,38 @@ export default function Attire() {
   const { data: sports } = useFetch("/sports");
 
   return (
-    <div>
+    <div className="page-stack">
       <BackgroundRotator images={attireImages} />
-      <h1>Attire Guide</h1>
-      <p>Recommended gear by sport.</p>
+      <section className="page-hero">
+        <p className="section-kicker">Gear guide</p>
+        <h1>Attire</h1>
+        <p>Recommended gear by sport, laid out in a clean and focused view.</p>
+      </section>
 
       {sports && (
-        <select value={sportId} onChange={(e) => setSportId(Number(e.target.value))} style={{ maxWidth: "220px" }}>
-          {sports.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-        </select>
+        <section className="card">
+          <label htmlFor="sport-select">Choose a sport</label>
+          <select id="sport-select" value={sportId} onChange={(e) => setSportId(Number(e.target.value))}>
+            {sports.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+          </select>
+        </section>
       )}
 
-      <div className="card" style={{ marginTop: "1rem" }}>
-        {loading && <p>Loading...</p>}
+      <section className="card">
+        {loading && <p>Loading attire guide...</p>}
         {error && <p className="error-text">{error}</p>}
         {data && data.length === 0 && <p>No attire guidance for this sport yet.</p>}
         {data && (
-          <ul>
+          <ul className="stack-list">
             {data.map((item) => (
               <li key={item.id} className="list-item">
                 <span>{item.item_name}</span>
-                <span className="mono muted">{item.mandatory ? "required" : "optional"}</span>
+                <span className="mono">{item.mandatory ? "required" : "optional"}</span>
               </li>
             ))}
           </ul>
         )}
-      </div>
+      </section>
     </div>
   );
 }

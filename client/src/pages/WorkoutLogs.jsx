@@ -38,12 +38,15 @@ export default function WorkoutLogs() {
   };
 
   return (
-    <div>
+    <div className="page-stack">
       <BackgroundRotator images={workoutLogImages} />
-      <h1>Workout Logs</h1>
-      <p>Log a session and track your history.</p>
+      <section className="page-hero">
+        <p className="section-kicker">Logbook</p>
+        <h1>Workout Logs</h1>
+        <p>Capture each session and keep your history moving forward.</p>
+      </section>
 
-      <div className="card">
+      <section className="card">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <select name="sport_id" value={form.sport_id} onChange={handleChange} required>
@@ -55,19 +58,19 @@ export default function WorkoutLogs() {
             <button type="submit">Add Log</button>
           </div>
         </form>
-      </div>
+      </section>
 
-      <div className="card">
-        {loading && <p>Loading...</p>}
+      <section className="card">
+        {loading && <p>Loading workout history...</p>}
         {error && <p className="error-text">{error}</p>}
         {data && data.items.length === 0 && <p>No logs yet.</p>}
         {data && (
           <>
-            <ul>
+            <ul className="stack-list">
               {data.items.map((log) => (
                 <li key={log.id} className="list-item">
                   <span>{log.sport?.name}</span>
-                  <span className="mono muted">{log.duration_minutes} min · {log.log_date}</span>
+                  <span className="mono">{log.duration_minutes} min · {log.log_date}</span>
                   <button className="danger" onClick={() => handleDelete(log.id)}>Delete</button>
                 </li>
               ))}
@@ -79,7 +82,7 @@ export default function WorkoutLogs() {
             </div>
           </>
         )}
-      </div>
+      </section>
     </div>
   );
 }
