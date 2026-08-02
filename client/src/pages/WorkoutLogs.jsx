@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useFetch, API_BASE } from "../hooks/useFetch";
+import { useFetch } from "../hooks/useFetch";
+import { buildApiUrl } from "../lib/api";
 import BackgroundRotator from "../components/BackgroundRotator";
 import { workoutLogImages } from "../backgroundImages";
 
@@ -16,7 +17,7 @@ export default function WorkoutLogs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`${API_BASE}/workout-logs`, {
+    await fetch(buildApiUrl("/workout-logs", import.meta.env.VITE_API_URL || "https://sports-watch-backend.onrender.com"), {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({
@@ -30,7 +31,7 @@ export default function WorkoutLogs() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`${API_BASE}/workout-logs/${id}`, {
+    await fetch(buildApiUrl(`/workout-logs/${id}`, import.meta.env.VITE_API_URL || "https://sports-watch-backend.onrender.com"), {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

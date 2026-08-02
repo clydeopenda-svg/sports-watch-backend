@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useFetch, API_BASE } from "../hooks/useFetch";
+import { useFetch } from "../hooks/useFetch";
+import { buildApiUrl } from "../lib/api";
 import BackgroundRotator from "../components/BackgroundRotator";
 import { goalsImages } from "../backgroundImages";
 
@@ -14,7 +15,7 @@ export default function Goals() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch(`${API_BASE}/goals`, {
+    await fetch(buildApiUrl("/goals", import.meta.env.VITE_API_URL || "https://sports-watch-backend.onrender.com"), {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify(form),

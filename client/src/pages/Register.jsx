@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { API_BASE } from "../hooks/useFetch";
+import { buildApiUrl, parseJsonResponse } from "../lib/api";
 
 export default function Register() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -17,13 +17,20 @@ export default function Register() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}/register`, {
+      const res = await fetch(buildApiUrl("/register", import.meta.env.VITE_API_URL || "https://sports-watch-backend.onrender.com"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Registration failed");
+      const data = await parseJsonResponse(res);
+      if (!res.ok) {
+        const message = typeof data === "object" && data && data.error
+          ? data.error
+          : typeof data === "string" && data.trim()
+            ? data
+            : "Registration failed";
+        throw new Error(message);
+      }
       login(data.access_token, data.user);
       navigate("/");
     } catch (err) {

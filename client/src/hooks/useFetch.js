@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { buildApiUrl, parseJsonResponse } from "../lib/api";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://sports-watch-backend.onrender.com";
 
 export function useFetch(path, options = {}) {
   const { token } = useAuth();
@@ -14,8 +15,11 @@ export function useFetch(path, options = {}) {
     setLoading(true);
     setError(null);
 
-    fetch(`${API_URL}${path}`, {
+    const controller = new AbortController();
+
+    fetch(buildApiUrl(path, API_URL), {
       ...options,
+      signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -23,12 +27,24 @@ export function useFetch(path, options = {}) {
       },
     })
       .then(async (res) => {
-        const json = await res.json();
-        if (!res.ok) throw new Error(json.error || "Request failed");
-        setData(json);
+        const payload = await parseJsonResponse(res);
+        if (!res.ok) {
+          const message = typeof payload === "object" && payload && payload.error
+            ? payload.error
+            : typeof payload === "string" && payload.trim()
+              ? payload
+              : "Request failed";
+          throw new Error(message);
+        }
+        setData(payload);
       })
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        if (err.name === "AbortError") return;
+        setError(err.message || "Request failed");
+      })
       .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, [path, token]);
 
   return { data, loading, error };
