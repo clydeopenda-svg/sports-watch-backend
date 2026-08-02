@@ -106,3 +106,55 @@ label {
 ul { list-style: none; padding: 0; margin: 0; }
 
 ::selection { background: rgba(77, 141, 255, 0.3); }
+
+select {
+  font-family: var(--font-body);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(77, 141, 255, 0.15);
+}
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--border); }
+th { color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+
+/* Scrollbar theming */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--blue-dim); }
+
+/* List item polish */
+.list-item {
+  gap: 1rem;
+}
+.list-item > span:first-child {
+  font-weight: 500;
+  flex: 1;
+}
+.list-item button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+/* Page spacing rhythm */
+.page h1 { margin-bottom: 0.25rem; }
+.page > p:first-of-type { margin-bottom: 1.5rem; }
+
+/* Empty states */
+.card p:only-child {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1rem 0;
+  margin: 0;
+}

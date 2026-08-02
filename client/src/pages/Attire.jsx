@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
+import BackgroundRotator from "../components/BackgroundRotator";
+import { attireImages } from "../backgroundImages";
 
 export default function Attire() {
   const [sportId, setSportId] = useState(1);
@@ -8,26 +10,26 @@ export default function Attire() {
 
   return (
     <div>
+      <BackgroundRotator images={attireImages} />
       <h1>Attire Guide</h1>
       <p>Recommended gear by sport.</p>
 
       {sports && (
-        <select value={sportId} onChange={(e) => setSportId(Number(e.target.value))}>
-          {sports.map((s) => (
-            <option key={s.id} value={s.id}>{s.name}</option>
-          ))}
+        <select value={sportId} onChange={(e) => setSportId(Number(e.target.value))} style={{ maxWidth: "220px" }}>
+          {sports.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
       )}
 
-      <div style={{ marginTop: "1rem" }}>
+      <div className="card" style={{ marginTop: "1rem" }}>
         {loading && <p>Loading...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
         {data && data.length === 0 && <p>No attire guidance for this sport yet.</p>}
         {data && (
           <ul>
             {data.map((item) => (
-              <li key={item.id}>
-                {item.item_name} {item.mandatory ? "(required)" : "(optional)"}
+              <li key={item.id} className="list-item">
+                <span>{item.item_name}</span>
+                <span className="mono muted">{item.mandatory ? "required" : "optional"}</span>
               </li>
             ))}
           </ul>

@@ -1,4 +1,6 @@
 import { useFetch } from "../hooks/useFetch";
+import BackgroundRotator from "../components/BackgroundRotator";
+import { statsImages } from "../backgroundImages";
 
 export default function Stats() {
   const { data, loading, error } = useFetch("/workout-logs?page=1&per_page=100");
@@ -15,27 +17,22 @@ export default function Stats() {
 
   return (
     <div>
+      <BackgroundRotator images={statsImages} />
       <h1>Stats</h1>
       <p>Your training breakdown by sport.</p>
 
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
       {data && Object.keys(totals).length === 0 && <p>No workout data yet.</p>}
-      {data && (
-        <table>
-          <thead>
-            <tr><th>Sport</th><th>Sessions</th><th>Total Minutes</th></tr>
-          </thead>
-          <tbody>
-            {Object.entries(totals).map(([sport, stat]) => (
-              <tr key={sport}>
-                <td>{sport}</td>
-                <td>{stat.sessions}</td>
-                <td>{stat.minutes}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {data && Object.keys(totals).length > 0 && (
+        <div className="card">
+          {Object.entries(totals).map(([sport, stat]) => (
+            <div key={sport} className="list-item">
+              <span>{sport}</span>
+              <span className="mono muted">{stat.sessions} sessions · {stat.minutes} min</span>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

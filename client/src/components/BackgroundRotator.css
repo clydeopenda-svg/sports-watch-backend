@@ -1,0 +1,24 @@
+.bg-rotator {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.bg-rotator-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.bg-rotator-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 20, 28, 0.45) 0%,
+    rgba(15, 20, 28, 0.75) 60%,
+    rgba(15, 20, 28, 0.95) 100%
+  );
+}
