@@ -51,7 +51,7 @@ export default function WorkoutLogs() {
               {sports && sports.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
             </select>
             <input name="log_date" type="date" value={form.log_date} onChange={handleChange} required />
-            <input name="duration_minutes" placeholder="Duration (min)" value={form.duration_minutes} onChange={handleChange} required />
+            <input name="duration_minutes" type="number" min="1" placeholder="Duration (min)" value={form.duration_minutes} onChange={handleChange} required />
             <button type="submit">Add Log</button>
           </div>
         </form>
