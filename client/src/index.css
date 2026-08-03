@@ -134,6 +134,11 @@ input:focus, select:focus {
   background: rgba(255, 255, 255, 0.06);
 }
 
+select option {
+  background-color: var(--bg-elevated);
+  color: var(--text-strong);
+}
+
 label {
   display: block;
   font-size: 0.8rem;
