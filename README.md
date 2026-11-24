@@ -89,6 +89,12 @@ flask run
 
 The API will typically be available at http://127.0.0.1:5000.
 
+7. Run the backend tests (they use an in-memory SQLite database, so PostgreSQL is not needed):
+
+```bash
+python -m unittest discover tests
+```
+
 ## Frontend Setup
 
 1. Install frontend dependencies:
@@ -109,7 +115,7 @@ The frontend will typically be available at http://localhost:5173.
 ## Main API Endpoints
 
 ### Authentication
-- POST /register
+- POST /register (always creates a normal `user`; admin accounts come from `seed.py`)
 - POST /login
 
 ### Sports
@@ -146,6 +152,7 @@ The frontend will typically be available at http://localhost:5173.
 - migrations/ — Alembic migrations
 - client/ — React/Vite frontend
 - seed.py — sample data seeding
+- tests/ — backend tests (standard-library unittest)
 - requirements.txt — backend dependencies
 
 ## Notes

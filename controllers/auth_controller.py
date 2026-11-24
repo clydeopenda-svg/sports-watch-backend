@@ -14,7 +14,10 @@ class AuthController:
             username=data["username"],
             email=data["email"],
             password_hash=generate_password_hash(data["password"]),
-            role=data.get("role", "user"),
+            # Never trust a role sent by the client: otherwise anyone could
+            # register as "admin" and pass @admin_required. Admin accounts are
+            # created server-side only (see seed.py).
+            role="user",
         )
         db.session.add(user)
         db.session.commit()
